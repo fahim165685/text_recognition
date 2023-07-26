@@ -10,7 +10,7 @@ class CustomButton extends StatelessWidget {
     this.borderColor = Colors.deepPurple,
     this.buttonColor = Colors.deepPurple,
     this.fontColor,
-    this.height = 56,
+    this.height = 46,
     this.borderRadius=6,
     this.borderWidth=2,
     this.icon,
@@ -33,7 +33,7 @@ class CustomButton extends StatelessWidget {
       decoration: BoxDecoration(
         color: showBorderOnly==false? buttonColor:null,
         borderRadius: BorderRadius.circular(borderRadius),
-        border:showBorderOnly==true? Border.all(color: borderColor,width: borderWidth, ):null,
+        border:showBorderOnly==true? Border.all(color: borderColor,width: borderWidth,strokeAlign:BorderSide.strokeAlignInside ):null,
        ),
       child: Material(
         color: Colors.transparent,
