@@ -23,10 +23,6 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       elevation: 0,
-      systemOverlayStyle:SystemUiOverlayStyle(
-        systemNavigationBarColor: AppColors.appColor.withOpacity(0.2),
-        statusBarColor: AppColors.white,
-      ) ,
       backgroundColor: AppColors.white,
       shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(

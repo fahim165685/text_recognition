@@ -22,6 +22,7 @@ class Dropdown extends StatelessWidget {
         value: controller.selectedScript,
         onChanged: (value) {
           controller.selectedScript = value as TextRecognitionScript;
+
         },
         hintText: "Select language Script",
         helperText: "Select language",

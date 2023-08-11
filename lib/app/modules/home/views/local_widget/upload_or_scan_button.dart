@@ -27,15 +27,14 @@ class UploadOrScanButton extends StatelessWidget {
         const SizedBox(
           width: 10,
         ),
-        if ((controller.imageFile == null) == false)
+        if ((controller.imageFile != null))
           Expanded(
               child: CustomButton(
                   text: "Convert To Text",
                   onTap: (controller.isLoading)
                       ? null
                       : () {
-                    final InputImage inputImage = InputImage.fromFilePath(
-                        controller.imageFile!.path);
+                    final InputImage inputImage = InputImage.fromFilePath(controller.imageFile!.path);
                     controller.processImage(inputImage);
                   }))
       ],

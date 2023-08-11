@@ -3,22 +3,27 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 import 'package:get/get.dart';
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:text_recognition/app/helper/app_helper.dart';
 
 import '../views/local_widget/select_pick_image_option.dart';
 
 class HomeController extends GetxController {
 
+  FlutterTts flutterTts = FlutterTts();
   File? imageFile;
   bool isConvert = false;
   bool isLoading = false;
+  bool isSpeak = false;
   bool onEdit = true;
   int totalLine = 1;
 
   TextEditingController textController = TextEditingController();
+
 
   TextRecognitionScript selectedScript = TextRecognitionScript.latin;
 
@@ -31,9 +36,28 @@ class HomeController extends GetxController {
   ];
 
 
-    editText(){
+  bool toggleEditText(){
       onEdit = !onEdit;
       update();
+      return onEdit;}
+
+  bool setIsSpeak (bool value){
+      isSpeak = value ;
+      update();
+      return isSpeak;}
+
+  Future<void> textToSpeech() async{
+      try{
+        if(!isSpeak){
+          flutterTts.setStartHandler(() => setIsSpeak(true));
+          flutterTts.setCompletionHandler(() =>setIsSpeak(false));
+          await flutterTts.setSpeechRate(0.4);
+          await flutterTts.speak(textController.text);
+        }else{
+         await flutterTts.stop();
+         setIsSpeak(false);
+        }
+      }catch(e) {AppHelper.miniErrorSnackBar();}
     }
 
   Future pickImage(ImageSource source) async {
@@ -53,6 +77,11 @@ class HomeController extends GetxController {
     }finally{
       update();
     }
+  }
+
+  void copyToClipboard()async {
+    await Clipboard.setData(ClipboardData(text: textController.text));
+    AppHelper.miniSuccessSnackBar(massage: "Text Copy to Clipboard");
   }
 
   Future<File?> _cropImage({required File imageFile}) async {
@@ -102,27 +131,27 @@ class HomeController extends GetxController {
     );
   }
 
-
   void processImage(InputImage image) async {
     isLoading = true;
+    totalLine = 1;
     textController.clear();
     update();
     try{
-      final textRecognizer = TextRecognizer(script: selectedScript);
-      log(image.filePath!);
-      final RecognizedText recognizedText = await textRecognizer.processImage(image);
+      TextRecognizer textRecognizer = TextRecognizer(script: selectedScript);
+      //log(image.filePath!);
+      RecognizedText? recognizedText = await textRecognizer.processImage(image);
       isConvert = true;
-      for (TextBlock block in recognizedText.blocks) {
-        for (TextLine line in block.lines) {
-          totalLine++;
-          textController.text = "${textController.value.text}${line.text}\n";
-        }
+    for (TextBlock block in recognizedText.blocks) {
+      for (TextLine line in block.lines) {
+        totalLine++;
+        textController.text = "${textController.value.text}${line.text}\n";
       }
+    }
       //outPutText.value = recognizedText.text;
       ///End busy state
       isLoading = false;
     }catch(e){
-      print(e);
+      print("87554545213$e");
       isLoading = false;
     }finally{
       update();

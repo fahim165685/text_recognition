@@ -20,28 +20,12 @@ class HomeView extends GetView<HomeController> {
         return Scaffold(
             appBar: const CustomAppBar(title: "Text Reorganization",),
             body: HomeBody(homeController: homeController,),
-            floatingActionButton: InkWell(
-              onTap: (){
-                showDialog(context: context,
-                  barrierDismissible: false,
-                  builder: (context) => WillPopScope(
-                    onWillPop: () async {
-                      return false;
-                    },
-                    child: Dialog(
-                    elevation: 0,
-                    backgroundColor: Colors.transparent,
-                    child: CircularProgressIndicator(),
-
-                ),
-                  ),);
-              },
-              borderRadius: BorderRadius.circular(50),
-              child: CircleAvatar(
-                radius:30,
-                backgroundColor: Colors.deepPurpleAccent.shade100.withOpacity(0.2),
-                child: const Icon(Icons.history,color: AppColors.appColor,size: 40,),
-              ),
+            floatingActionButton: FloatingActionButton(
+              onPressed: () {},
+              elevation: 0,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
+              backgroundColor: Color(0xFFD7C9FF),
+              child: Icon(Icons.refresh,color: AppColors.appColor,size: 40,),
             ),
           bottomNavigationBar:Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -72,15 +56,14 @@ class HomeBody extends StatelessWidget {
             AppSpace.spaceH30,
             ImageField(controller: homeController),
             AppSpace.spaceH30,
-
-            Dropdown(controller: homeController,),
-            AppSpace.spaceH20,
+            /*Dropdown(controller: homeController,),
+            AppSpace.spaceH20,*/
             //Button
             UploadOrScanButton(controller: homeController,),
 
             AppSpace.spaceH20,
             //Output
-            ScanResult(controller: homeController),
+            ScanResult(homeController: homeController),
             AppSpace.spaceH16,
             //Icon Button
             AppSpace.spaceH44

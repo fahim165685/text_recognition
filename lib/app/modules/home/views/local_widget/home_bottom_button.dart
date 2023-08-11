@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:text_recognition/app/routes/app_pages.dart';
 
 import '../../../../core/values/app_colors.dart';
 import '../../../../core/values/app_space.dart';
@@ -26,18 +27,23 @@ class HomeBottomButton extends StatelessWidget {
           CustomIconButton(
               text: "Copy Text",
               icon: AppSvgAssets.copyIcon,
-              onTap: (){}),
+              onTap: (){
+                homeController.copyToClipboard();
+              }),
 
           CustomIconButton(
               text: "Edit Text",
               icon: AppSvgAssets.editIcon,
               onTap: (){
-                homeController.editText();
+                homeController.toggleEditText();
               }),
 
           CustomIconButton(
               text: "Translate",
               icon: AppSvgAssets.translatorIcon,
+            onTap: () {
+              Get.toNamed(Routes.TRANSLATE);
+            },
               ),
         ],
       ),

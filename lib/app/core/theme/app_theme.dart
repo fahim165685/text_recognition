@@ -12,13 +12,6 @@ class AppTheme {
       surfaceTintColor:AppColors.appBgColor,
       backgroundColor: AppColors.white,
       titleTextStyle: const TextStyle(color: Colors.black),
-      systemOverlayStyle: const SystemUiOverlayStyle(
-        statusBarIconBrightness: Brightness.dark,
-        statusBarBrightness:Brightness.dark ,
-        statusBarColor: AppColors.appBgColor,
-        systemNavigationBarIconBrightness: Brightness.dark,
-        systemNavigationBarColor: AppColors.appBgColor,
-      ),
     ),
     brightness: Brightness.light,
     backgroundColor: Colors.white,
