@@ -15,14 +15,17 @@ class UploadOrScanButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return   Row(
+    return  Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Expanded(
             child: CustomButton(
                 showBorderOnly: true,
+                borderColor: Colors.purple,
+                textColor: Colors.purple,
                 text: "Upload Image",
+                height: 50,
                 onTap: () => controller.showSelectPhotoOptions(context))),
         const SizedBox(
           width: 10,

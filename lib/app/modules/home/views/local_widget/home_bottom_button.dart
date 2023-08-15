@@ -42,7 +42,7 @@ class HomeBottomButton extends StatelessWidget {
               text: "Translate",
               icon: AppSvgAssets.translatorIcon,
             onTap: () {
-              Get.toNamed(Routes.TRANSLATE);
+              Get.toNamed(Routes.TRANSLATE, arguments:homeController.textController.text );
             },
               ),
         ],

@@ -24,8 +24,8 @@ class HomeView extends GetView<HomeController> {
               onPressed: () {},
               elevation: 0,
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
-              backgroundColor: Color(0xFFD7C9FF),
-              child: Icon(Icons.refresh,color: AppColors.appColor,size: 40,),
+              backgroundColor: const Color(0xFFD7C9FF),
+              child: const Icon(Icons.refresh,color: AppColors.appColor,size: 40,),
             ),
           bottomNavigationBar:Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),

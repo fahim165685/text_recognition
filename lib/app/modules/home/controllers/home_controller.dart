@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:get/get.dart';
+import 'package:google_mlkit_language_id/google_mlkit_language_id.dart';
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
+import 'package:google_mlkit_translation/google_mlkit_translation.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:text_recognition/app/helper/app_helper.dart';
@@ -157,22 +159,4 @@ class HomeController extends GetxController {
       update();
     }
   }
-
- /*Future<String?>translateText(String reText) async{
-    try{
-      final langIdentifier = LanguageIdentifier(confidenceThreshold: 0.5);
-      final languageCode = await langIdentifier.identifyLanguage(reText);
-      langIdentifier.close();
-      final tr = OnDeviceTranslatorModelManager();
-      final translator =  OnDeviceTranslator(
-          sourceLanguage: TranslateLanguage.values.firstWhere((element) => element.bcpCode == languageCode),
-          targetLanguage: TranslateLanguage.japanese);
-      final translateText = await translator.translateText(reText);
-      trText.value= translateText;
-      translator.close();
-       return translateText;
-    }catch(e){
-      return null;
-    }
- }*/
 }
