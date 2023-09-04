@@ -45,11 +45,7 @@ static void miniSuccessSnackBar({String massage = "Success", double maxWidth = 2
                 FittedBox(
                   fit: BoxFit.contain,
                   child: Text(massage,
-                      style: Get.textTheme.titleMedium!.copyWith(
-                          fontWeight: FontWeight.w400,
-                          fontSize: 14,
-                          color: Get.theme.colorScheme.tertiary)),
-                ),
+                      style: Get.textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w400, fontSize: 14, color: Colors.black)),),
               ],
             ),
           ),
@@ -60,7 +56,7 @@ static void miniSuccessSnackBar({String massage = "Success", double maxWidth = 2
   );
 }
 
-static void miniErrorSnackBar({String massage = "Something Was Wrong",double maxWidth = 250 }) {
+static void miniErrorSnackBar({String massage = "Something Was Wrong",double maxWidth = 250 , Widget? icon}) {
   Get.rawSnackbar(
     margin: const EdgeInsets.symmetric(
       horizontal: 15,
@@ -69,6 +65,7 @@ static void miniErrorSnackBar({String massage = "Something Was Wrong",double max
     borderColor: Colors.transparent,
     backgroundColor: Colors.transparent,
     snackPosition: SnackPosition.TOP,
+    icon: icon,
     messageText: Container(
       height: 45,
       padding:const EdgeInsets.symmetric(horizontal: 15),
@@ -85,8 +82,8 @@ static void miniErrorSnackBar({String massage = "Something Was Wrong",double max
         mainAxisAlignment: MainAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Icon(Icons.cancel,
-              color: Colors.red, size: 20),
+          if(icon == null)
+          const Icon(Icons.cancel, color: Colors.red, size: 20),
           AppSpace.spaceW8,
           Expanded(
             child: Column(
@@ -94,13 +91,11 @@ static void miniErrorSnackBar({String massage = "Something Was Wrong",double max
               mainAxisAlignment: MainAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,
               children: [
-                FittedBox(
-                  fit: BoxFit.contain,
+                FittedBox(fit: BoxFit.contain,
                   child: Text(massage,
                       style: Get.textTheme.titleMedium!.copyWith(
-                          fontWeight: FontWeight.w400,
-                          fontSize: 14,
-                          color: Get.theme.colorScheme.tertiary)),
+                          fontWeight: FontWeight.w400, fontSize: 14,
+                          color: Colors.black)),
                 ),
               ],
             ),

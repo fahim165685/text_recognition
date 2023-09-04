@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 
 import '../../../../global_widget/custom_button.dart';
@@ -8,8 +7,7 @@ import '../../controllers/home_controller.dart';
 class UploadOrScanButton extends StatelessWidget {
   const UploadOrScanButton({
     super.key,
-    required this.controller,
-  });
+    required this.controller,});
 
   final HomeController controller;
 
@@ -24,7 +22,7 @@ class UploadOrScanButton extends StatelessWidget {
                 showBorderOnly: true,
                 borderColor: Colors.purple,
                 textColor: Colors.purple,
-                text: "Upload Image",
+                text: controller.imageFile == null? "Upload Image" : "Upload Image Again",
                 height: 50,
                 onTap: () => controller.showSelectPhotoOptions(context))),
         const SizedBox(
@@ -34,9 +32,7 @@ class UploadOrScanButton extends StatelessWidget {
           Expanded(
               child: CustomButton(
                   text: "Convert To Text",
-                  onTap: (controller.isLoading)
-                      ? null
-                      : () {
+                  onTap: (controller.isLoading) ? null : () {
                     final InputImage inputImage = InputImage.fromFilePath(controller.imageFile!.path);
                     controller.processImage(inputImage);
                   }))

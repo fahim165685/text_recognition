@@ -9,10 +9,9 @@ import '../../../../core/values/app_svg_assets.dart';
 import '../../controllers/home_controller.dart';
 
 class HomeBottomButton extends StatelessWidget {
-  const HomeBottomButton({
-    super.key,
-    required this.homeController,
-  });
+  const HomeBottomButton({super.key,
+    required this.homeController,});
+
   final HomeController homeController;
 
   @override
@@ -23,6 +22,11 @@ class HomeBottomButton extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
+          CustomIconButton(
+              text: "Listen",
+              color: homeController.isSpeak ? Colors.black: Colors.black.withOpacity(0.5),
+              icon: AppSvgAssets.speakerIcon,
+              onTap: (){homeController.textToSpeech();}),
 
           CustomIconButton(
               text: "Copy Text",
@@ -53,11 +57,12 @@ class HomeBottomButton extends StatelessWidget {
 
 class CustomIconButton extends StatelessWidget {
   final VoidCallback? onTap;
+  final Color? color;
   final String icon;
   final String text;
   const CustomIconButton({
     super.key,
-    this.onTap,
+    this.onTap,this.color,
     required this.icon,
     required this.text,
   });
@@ -75,15 +80,13 @@ class CustomIconButton extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
             children: [
-              SvgPicture.asset(
-                icon,
+              SvgPicture.asset(icon,
                 width: 18,
-                color: onTap != null? AppColors.black :AppColors.grey400 ,
+                color: color?? AppColors.black,
                 height: 18,
               ),
               AppSpace.spaceH6,
-              Text(
-                text,
+              Text(text,
                 style: TextStyle(fontSize: 16, color: onTap != null? AppColors.grey500 :AppColors.grey400 ),
               )
             ],

@@ -7,7 +7,7 @@
         </intent>
     </queries>
     <application
-        android:label="text_recognition"
+        android:label="Text Minder"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

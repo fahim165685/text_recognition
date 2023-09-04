@@ -5,7 +5,6 @@ import 'package:text_recognition/app/core/values/app_space.dart';
 import 'package:text_recognition/app/global_widget/custom_app_bar.dart';
 
 import '../controllers/home_controller.dart';
-import 'local_widget/dropdown.dart';
 import 'local_widget/home_bottom_button.dart';
 import 'local_widget/image_field.dart';
 import 'local_widget/scan_result.dart';
@@ -21,8 +20,7 @@ class HomeView extends GetView<HomeController> {
             appBar: const CustomAppBar(title: "Text Reorganization",),
             body: HomeBody(homeController: homeController,),
             floatingActionButton: FloatingActionButton(
-              onPressed: () {},
-              elevation: 0,
+              onPressed: () =>homeController.clearAllData(), elevation: 0,
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
               backgroundColor: const Color(0xFFD7C9FF),
               child: const Icon(Icons.refresh,color: AppColors.appColor,size: 40,),
@@ -57,8 +55,8 @@ class HomeBody extends StatelessWidget {
             ImageField(controller: homeController),
             AppSpace.spaceH30,
             /*Dropdown(controller: homeController,),
-            AppSpace.spaceH20,*/
-            //Button
+            AppSpace.spaceH20,
+            //Button*/
             UploadOrScanButton(controller: homeController,),
 
             AppSpace.spaceH20,

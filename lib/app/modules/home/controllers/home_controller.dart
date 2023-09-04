@@ -1,29 +1,23 @@
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:get/get.dart';
-import 'package:google_mlkit_language_id/google_mlkit_language_id.dart';
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
-import 'package:google_mlkit_translation/google_mlkit_translation.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:text_recognition/app/helper/app_helper.dart';
 
 import '../views/local_widget/select_pick_image_option.dart';
 
-class HomeController extends GetxController {
+class HomeController extends GetxController with GetTickerProviderStateMixin {
 
   FlutterTts flutterTts = FlutterTts();
   File? imageFile;
-  bool isConvert = false;
-  bool isLoading = false;
-  bool isSpeak = false;
-  bool onEdit = true;
+  bool isConvert = false; bool isLoading = false;
+  bool isSpeak = false; bool onEdit = true;
   int totalLine = 1;
-
   TextEditingController textController = TextEditingController();
 
 
@@ -37,7 +31,6 @@ class HomeController extends GetxController {
     TextRecognitionScript.latin
   ];
 
-
   bool toggleEditText(){
       onEdit = !onEdit;
       update();
@@ -48,9 +41,18 @@ class HomeController extends GetxController {
       update();
       return isSpeak;}
 
+  void clearAllData(){
+    flutterTts.stop(); imageFile = null ;
+    isConvert = false; isLoading = false;
+    isSpeak = false; onEdit = true;
+    textController.clear(); totalLine = 1;
+    update();
+  }
+
+
   Future<void> textToSpeech() async{
-      try{
-        if(!isSpeak){
+    if(textController.text == ""){return;}
+      try{if(!isSpeak){
           flutterTts.setStartHandler(() => setIsSpeak(true));
           flutterTts.setCompletionHandler(() =>setIsSpeak(false));
           await flutterTts.setSpeechRate(0.4);
@@ -81,23 +83,15 @@ class HomeController extends GetxController {
     }
   }
 
-  void copyToClipboard()async {
-    await Clipboard.setData(ClipboardData(text: textController.text));
-    AppHelper.miniSuccessSnackBar(massage: "Text Copy to Clipboard");
-  }
-
   Future<File?> _cropImage({required File imageFile}) async {
     try{
       CroppedFile? croppedImage = await ImageCropper().cropImage(
-          sourcePath: imageFile.path,
+        sourcePath: imageFile.path,
         uiSettings: [
-          AndroidUiSettings(
-              toolbarTitle: 'Crop Image',
+          AndroidUiSettings(toolbarTitle: 'Crop Image',
               toolbarColor: Colors.deepPurple.shade400,
-              cropFrameColor: Colors.grey,
-              toolbarWidgetColor: Colors.white,
-              initAspectRatio: CropAspectRatioPreset.original,
-              cropFrameStrokeWidth: 3,
+              cropFrameColor: Colors.grey, toolbarWidgetColor: Colors.white,
+              initAspectRatio: CropAspectRatioPreset.original, cropFrameStrokeWidth: 3,
               lockAspectRatio: false),
           IOSUiSettings(
             title: 'Crop Image',
@@ -133,6 +127,11 @@ class HomeController extends GetxController {
     );
   }
 
+  void copyToClipboard()async {
+    await Clipboard.setData(ClipboardData(text: textController.text));
+    AppHelper.miniSuccessSnackBar(massage: "Text Copy to Clipboard");
+  }
+
   void processImage(InputImage image) async {
     isLoading = true;
     totalLine = 1;
@@ -143,6 +142,8 @@ class HomeController extends GetxController {
       //log(image.filePath!);
       RecognizedText? recognizedText = await textRecognizer.processImage(image);
       isConvert = true;
+      if(recognizedText.text.isEmpty){
+        AppHelper.miniErrorSnackBar(icon: const Icon(Icons.report_gmailerrorred_rounded,color: Colors.red), massage: "No text found");}
     for (TextBlock block in recognizedText.blocks) {
       for (TextLine line in block.lines) {
         totalLine++;
@@ -153,7 +154,7 @@ class HomeController extends GetxController {
       ///End busy state
       isLoading = false;
     }catch(e){
-      print("87554545213$e");
+      AppHelper.miniErrorSnackBar();
       isLoading = false;
     }finally{
       update();

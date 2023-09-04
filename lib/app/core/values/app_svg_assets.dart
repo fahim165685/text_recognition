@@ -6,5 +6,6 @@ class AppSvgAssets {
   static const String copyIcon = 'assets/icons/copy.svg';
   static const String editIcon = 'assets/icons/edit.svg';
   static const String translatorIcon = 'assets/icons/translator.svg';
+  static const String speakerIcon = 'assets/icons/speaker_icon.svg';
 
 }

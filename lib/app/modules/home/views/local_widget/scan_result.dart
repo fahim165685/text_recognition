@@ -35,7 +35,28 @@ class ScanResult extends StatelessWidget {
                 borderType: BorderType.RRect,
                 dashPattern: const [4, 4],
                 padding: const EdgeInsets.all(0),
-                child: Stack(
+                child: TextField(
+                  scrollPhysics: homeController.onEdit? const NeverScrollableScrollPhysics(): const BouncingScrollPhysics(),
+                  readOnly: homeController.onEdit,
+                  style:  TextStyle(
+                    fontWeight:homeController.onEdit? FontWeight.w400: FontWeight.w500,
+                    color: homeController.onEdit? AppColors.grey600 : AppColors.black,
+                    fontSize: 18,),
+                  onEditingComplete: () =>homeController.toggleEditText(),
+                  textAlign: TextAlign.center,
+                  controller: homeController.textController,
+                  maxLines: homeController.totalLine,
+                  textInputAction: TextInputAction.done,
+                  decoration: const InputDecoration(
+                      border: InputBorder.none,
+                      disabledBorder: InputBorder.none,
+                      enabledBorder: InputBorder.none,
+                      errorBorder: InputBorder.none,
+                      focusedBorder: InputBorder.none,
+                      focusedErrorBorder: InputBorder.none
+                  ),
+                ),
+              /*Stack(
                   children: [
                     TextField(
                       scrollPhysics: homeController.onEdit? const NeverScrollableScrollPhysics(): const BouncingScrollPhysics(),
@@ -77,7 +98,8 @@ class ScanResult extends StatelessWidget {
                         )))
 
                   ],
-                )),
+                )*/
+            ),
           ),
           AppSpace.spaceH8,
 
